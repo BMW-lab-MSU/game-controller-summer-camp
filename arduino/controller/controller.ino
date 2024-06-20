@@ -2,109 +2,91 @@
 #include "Keyboard.h"
 
 
-Adafruit_FreeTouch qt_1 = Adafruit_FreeTouch(A0, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
-Adafruit_FreeTouch qt_2 = Adafruit_FreeTouch(A1, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
-Adafruit_FreeTouch qt_3 = Adafruit_FreeTouch(A6, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
-Adafruit_FreeTouch qt_4 = Adafruit_FreeTouch(A7, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
-Adafruit_FreeTouch qt_5 = Adafruit_FreeTouch(A8, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
-Adafruit_FreeTouch qt_6 = Adafruit_FreeTouch(A9, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
-Adafruit_FreeTouch qt_7 = Adafruit_FreeTouch(A10, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
+Adafruit_FreeTouch leftButton = Adafruit_FreeTouch(A0, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
+Adafruit_FreeTouch rightButton = Adafruit_FreeTouch(A1, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
+Adafruit_FreeTouch upButton = Adafruit_FreeTouch(A2, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
+Adafruit_FreeTouch downButton = Adafruit_FreeTouch(A3, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
+Adafruit_FreeTouch aButton = Adafruit_FreeTouch(A4, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
+Adafruit_FreeTouch bButton = Adafruit_FreeTouch(A5, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
+Adafruit_FreeTouch spaceButton = Adafruit_FreeTouch(A6, OVERSAMPLE_4, RESISTOR_50K, FREQ_MODE_NONE);
 
 void setup() {
   Serial.begin(9600);
-  while (!Serial);
-  Serial.println("FreeTouch test");
 
-  if (! qt_1.begin())
-    Serial.println("Failed to begin qt");
-  if (! qt_2.begin())
-    Serial.println("Failed to begin qt");
-  if (! qt_3.begin())
-    Serial.println("Failed to begin qt");
-  if (! qt_4.begin())
-    Serial.println("Failed to begin qt");
-  if (! qt_5.begin())
-    Serial.println("Failed to begin qt");
-  if (! qt_6.begin())
-    Serial.println("Failed to begin qt");
-  if (! qt_7.begin())
-    Serial.println("Failed to begin qt");
-
-
-//  Keyboard setup
+  // Keyboard setup
   Keyboard.begin();
 }
 
-int qt_Threshold = 1000;
+int threshold = 1000;
 
 void loop() {
-  int qt1 = 0;
-  int qt2 = 0;
-  int qt3 = 0;
-  int qt4 = 0;
-  int qt5 = 0;
-  int qt6 = 0;
-  int qt7 = 0;
+  int leftValue = 0;
+  int rightValue = 0;
+  int upValue = 0;
+  int downValue = 0;
+  int aValue = 0;
+  int bValue = 0;
+  int spaceValue = 0;
 
-  qt1 = qt_1.measure();
-  Serial.print(qt1);
+  leftValue = leftButton.measure();
+  Serial.print(leftValue);
   Serial.print(",");
 
-  qt2 = qt_2.measure();
-  Serial.print(qt2);
+  rightValue = rightButton.measure();
+  Serial.print(rightValue);
   Serial.print(",");
 
-  qt3 = qt_3.measure();
-  Serial.print(qt3);
+  upValue = upButton.measure();
+  Serial.print(upValue);
   Serial.print(",");
 
-  qt4 = qt_4.measure();
-  Serial.print(qt4);
+  downValue = downButton.measure();
+  Serial.print(downValue);
   Serial.print(",");
 
-  qt5 = qt_5.measure();
-  Serial.print(qt5);
+  aValue = aButton.measure();
+  Serial.print(aValue);
   Serial.print(",");
 
-  qt6 = qt_6.measure();
-  Serial.print(qt6);
+  bValue = bButton.measure();
+  Serial.print(bValue);
   Serial.print(",");
 
-  qt7 = qt_7.measure();
-  Serial.print(qt7);
+  spaceValue = spaceButton.measure();
+  Serial.print(spaceValue);
   Serial.println();
 
-  if (qt1 >= qt_Threshold) {
+  if (leftValue >= threshold) {
     Keyboard.press(KEY_LEFT_ARROW);
   }else{
     Keyboard.release(KEY_LEFT_ARROW);
   }
-  if (qt2 >= qt_Threshold) {
+  if (rightValue >= threshold) {
     Keyboard.press(KEY_RIGHT_ARROW);
   }else{
     Keyboard.release(KEY_RIGHT_ARROW);
   }
-  if (qt3 >= qt_Threshold) {
+  if (upValue >= threshold) {
     Keyboard.press(KEY_UP_ARROW);
   }else{
     Keyboard.release(KEY_UP_ARROW);
   }
-  if (qt4 >= qt_Threshold) {
+  if (downValue >= threshold) {
     Keyboard.press(KEY_DOWN_ARROW);
   }else{
     Keyboard.release(KEY_DOWN_ARROW);
   }
-  if (qt5 >= qt_Threshold) {
+  if (aValue >= threshold) {
     Keyboard.press('A');
   }else{
     Keyboard.release('A');
   }
-  if (qt6 >= qt_Threshold) {
+  if (bValue >= threshold) {
     Keyboard.press('B');
   }else{
     Keyboard.release('B');
   }
-  if (qt7 >= qt_Threshold) {
+  if (spaceValue >= threshold) {
     Keyboard.print(' ');
   }else{
     Keyboard.release(' ');
