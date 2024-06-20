@@ -4,7 +4,7 @@ void setup() {
 
   // Wait until the serial port is ready
   while (!Serial) {
-
+    // do nothing
   }
 }
 
